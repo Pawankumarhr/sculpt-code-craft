@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { Canvas } from '@react-three/fiber';
-import { OrbitControls, Sphere, MeshDistortMaterial } from '@react-three/drei';
+import { OrbitControls } from '@react-three/drei';
 import { ChevronDown, Download, Github, Linkedin, Mail } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import * as THREE from 'three';
@@ -9,26 +9,34 @@ const AnimatedSphere = () => {
   const meshRef = useRef<THREE.Mesh>(null);
 
   useEffect(() => {
-    const interval = setInterval(() => {
+    let animationId: number;
+    
+    const animate = () => {
       if (meshRef.current) {
         meshRef.current.rotation.x += 0.01;
         meshRef.current.rotation.y += 0.01;
       }
-    }, 16);
-
-    return () => clearInterval(interval);
+      animationId = requestAnimationFrame(animate);
+    };
+    
+    animate();
+    
+    return () => {
+      if (animationId) {
+        cancelAnimationFrame(animationId);
+      }
+    };
   }, []);
 
   return (
-    <Sphere ref={meshRef} visible args={[1, 100, 200]} scale={2}>
-      <MeshDistortMaterial
+    <mesh ref={meshRef}>
+      <sphereGeometry args={[1, 64, 64]} />
+      <meshStandardMaterial
         color="#a855f7"
-        attach="material"
-        distort={0.3}
-        speed={1.5}
         roughness={0.4}
+        metalness={0.1}
       />
-    </Sphere>
+    </mesh>
   );
 };
 
@@ -101,15 +109,22 @@ export const Hero = () => {
           {/* 3D Animation */}
           <div className="relative h-96 lg:h-[500px] animate-scale-in">
             <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-secondary-glow/20 rounded-full blur-3xl"></div>
-            <Canvas
-              camera={{ position: [0, 0, 5], fov: 50 }}
-              className="w-full h-full"
-            >
-              <ambientLight intensity={0.5} />
-              <directionalLight position={[10, 10, 5]} intensity={1} />
-              <AnimatedSphere />
-              <OrbitControls enableZoom={false} autoRotate autoRotateSpeed={0.5} />
-            </Canvas>
+            <div className="w-full h-full">
+              <Canvas
+                camera={{ position: [0, 0, 5], fov: 50 }}
+                className="w-full h-full"
+                fallback={
+                  <div className="w-full h-full flex items-center justify-center">
+                    <div className="w-32 h-32 bg-gradient-primary rounded-full animate-pulse"></div>
+                  </div>
+                }
+              >
+                <ambientLight intensity={0.5} />
+                <directionalLight position={[10, 10, 5]} intensity={1} />
+                <AnimatedSphere />
+                <OrbitControls enableZoom={false} autoRotate autoRotateSpeed={0.5} />
+              </Canvas>
+            </div>
           </div>
         </div>
 
