@@ -66,7 +66,7 @@ const Portfolio = () => {
         <footer className="py-8 border-t border-border bg-section-bg">
           <div className="section-container">
             <div className="text-center text-muted-foreground">
-              <p className="mb-2">© 2024 John Doe. All rights reserved.</p>
+              <p className="mb-2">© 2025 PAWAN KUMAR. All rights reserved.</p>
               <p className="text-sm">
                 Built with React, TypeScript, and Three.js
               </p>

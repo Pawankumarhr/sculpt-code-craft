@@ -66,14 +66,14 @@ export const Contact = () => {
     {
       icon: Mail,
       title: 'Email',
-      content: 'hello@johndoe.com',
-      href: 'mailto:hello@johndoe.com'
+      content: 'pk2806@srmist.edu.in',
+      href: 'mailto:pk2806@srmist.edu.in'
     },
     {
       icon: Phone,
       title: 'Phone',
-      content: '+1 (555) 123-4567',
-      href: 'tel:+15551234567'
+      content: '(+91) 9992058749',
+      href: 'tel:+919992058749'
     },
     {
       icon: MapPin,

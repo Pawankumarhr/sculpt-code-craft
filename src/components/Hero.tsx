@@ -91,7 +91,7 @@ export const Hero = () => {
                 Hello, I'm
               </p>
               <h1 className="text-6xl lg:text-7xl font-bold font-space-grotesk mb-6 gradient-text animate-scale-in">
-                John Doe
+                PAWAN KUMAR
               </h1>
               <h2 className="text-3xl lg:text-4xl font-bold text-muted-foreground mb-6 animate-slide-up">
                 Frontend Developer & Designer
@@ -135,7 +135,7 @@ export const Hero = () => {
                 <Linkedin className="w-6 h-6" />
               </a>
               <a 
-                href="mailto:hello@johndoe.com"
+                href="mailto:pk2806@srmist.edu.in"
                 className="social-link"
                 aria-label="Email"
               >
