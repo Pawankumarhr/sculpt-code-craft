@@ -5,6 +5,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ThemeProvider } from '@/components/ui/theme-provider';
+import { LoadingScreen } from '@/components/LoadingScreen';
 import { Navigation } from '@/components/Navigation';
 import { Hero } from '@/components/Hero';
 import { About } from '@/components/About';
@@ -17,6 +18,7 @@ const queryClient = new QueryClient();
 
 const Portfolio = () => {
   const [darkMode, setDarkMode] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const savedTheme = localStorage.getItem('portfolio-theme');
@@ -52,27 +54,34 @@ const Portfolio = () => {
   return (
     <ThemeProvider defaultTheme="dark">
       <div className="min-h-screen bg-background text-foreground">
-        <Navigation darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
+        {isLoading ? (
+          <LoadingScreen onLoadingComplete={() => setIsLoading(false)} />
+        ) : (
+          <>
+            <Navigation darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
+            
+            <main>
+              <Hero />
+              <About />
+              <Skills />
+              <Projects />
+              <Contact />
+            </main>
+          </>
+        )}
         
-        <main>
-          <Hero />
-          <About />
-          <Skills />
-          <Projects />
-          <Contact />
-        </main>
-        
-        {/* Footer */}
-        <footer className="py-8 border-t border-border bg-section-bg">
-          <div className="section-container">
-            <div className="text-center text-muted-foreground">
-              <p className="mb-2">© 2025 PAWAN KUMAR. All rights reserved.</p>
-              <p className="text-sm">
-                Built with React, TypeScript, and Three.js
-              </p>
+        {!isLoading && (
+          <footer className="py-8 border-t border-border bg-section-bg">
+            <div className="section-container">
+              <div className="text-center text-muted-foreground">
+                <p className="mb-2">© 2025 PAWAN KUMAR. All rights reserved.</p>
+                <p className="text-sm">
+                  Built with React, TypeScript, and Three.js
+                </p>
+              </div>
             </div>
-          </div>
-        </footer>
+          </footer>
+        )}
       </div>
     </ThemeProvider>
   );

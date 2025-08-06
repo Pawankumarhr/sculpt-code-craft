@@ -62,7 +62,7 @@ export const Navigation = ({ darkMode, toggleDarkMode }: NavigationProps) => {
               }}
               className="font-space-grotesk font-bold text-2xl gradient-text"
             >
-              Portfolio
+              Pawan Kumar
             </a>
           </div>
 

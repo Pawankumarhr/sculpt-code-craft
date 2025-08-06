@@ -78,7 +78,7 @@ export const Contact = () => {
     {
       icon: MapPin,
       title: 'Location',
-      content: 'San Francisco, CA',
+      content: 'Chennai, Tamil Nadu',
       href: 'https://maps.google.com'
     }
   ];
