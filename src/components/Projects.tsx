@@ -111,22 +111,22 @@ export const Projects = () => {
           </div>
 
           {/* Projects Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {projects.map((project, index) => (
-              <Card key={index} className="project-card scroll-fade-in group">
-                <div className="relative overflow-hidden rounded-t-lg">
+              <Card key={index} className="project-card scroll-fade-in group bg-card/50 backdrop-blur-sm border-border/20 hover:border-primary/30 transition-all duration-300">
+                <div className="relative overflow-hidden">
                   <img 
                     src={project.image} 
                     alt={project.title}
                     className="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-105"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                     <div className="absolute bottom-4 left-4 right-4 flex space-x-2">
-                      <Button size="sm" variant="secondary" className="flex-1">
+                      <Button size="sm" variant="secondary" className="flex-1 bg-primary/20 text-primary border-primary/30 hover:bg-primary hover:text-primary-foreground">
                         <Eye className="w-4 h-4 mr-2" />
-                        Live Demo
+                        Live
                       </Button>
-                      <Button size="sm" variant="outline" className="flex-1">
+                      <Button size="sm" variant="outline" className="flex-1 border-primary/30 text-primary hover:bg-primary hover:text-primary-foreground">
                         <Github className="w-4 h-4 mr-2" />
                         Code
                       </Button>
@@ -136,29 +136,29 @@ export const Projects = () => {
                 
                 <CardContent className="p-6">
                   <div className="flex items-start justify-between mb-3">
-                    <h3 className="font-bold text-lg font-space-grotesk">{project.title}</h3>
-                    <Badge variant="secondary" className="text-xs">
+                    <h3 className="font-bold text-xl font-space-grotesk text-foreground">{project.title}</h3>
+                    <Badge variant="outline" className="text-xs border-primary/30 text-primary">
                       {project.category}
                     </Badge>
                   </div>
                   
-                  <p className="text-muted-foreground text-sm mb-4 line-clamp-3">
+                  <p className="text-muted-foreground text-sm mb-6 leading-relaxed">
                     {project.description}
                   </p>
                   
-                  <div className="flex flex-wrap gap-2 mb-4">
+                  <div className="flex flex-wrap gap-2 mb-6">
                     {project.technologies.map((tech, techIndex) => (
-                      <Badge key={techIndex} variant="outline" className="text-xs">
+                      <Badge key={techIndex} variant="secondary" className="text-xs bg-secondary/50 text-secondary-foreground hover:bg-secondary transition-colors">
                         {tech}
                       </Badge>
                     ))}
                   </div>
                   
-                  <div className="flex space-x-2">
+                  <div className="flex space-x-3">
                     <Button 
                       size="sm" 
                       variant="outline" 
-                      className="flex-1 hover:bg-primary hover:text-primary-foreground"
+                      className="flex-1 border-primary/30 text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-300"
                     >
                       <ExternalLink className="w-4 h-4 mr-2" />
                       Live
@@ -166,7 +166,7 @@ export const Projects = () => {
                     <Button 
                       size="sm" 
                       variant="outline" 
-                      className="flex-1 hover:bg-primary hover:text-primary-foreground"
+                      className="flex-1 border-primary/30 text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-300"
                     >
                       <Github className="w-4 h-4 mr-2" />
                       Code
