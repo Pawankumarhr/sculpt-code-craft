@@ -1,15 +1,18 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { AnimatedCounter } from './AnimatedCounter';
 
 export const Skills = () => {
   const sectionRef = useRef<HTMLElement>(null);
+  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
+            setIsVisible(true);
             const elements = entry.target.querySelectorAll('.scroll-fade-in');
             elements.forEach((el, index) => {
               setTimeout(() => {
@@ -96,12 +99,22 @@ export const Skills = () => {
                       <div key={skillIndex} className="space-y-2">
                         <div className="flex justify-between items-center">
                           <span className="font-medium">{skill.name}</span>
-                          <span className="text-sm text-muted-foreground">{skill.level}%</span>
+                          <span className="text-sm text-muted-foreground">
+                            <AnimatedCounter 
+                              targetValue={skill.level} 
+                              suffix="%" 
+                              isVisible={isVisible}
+                              duration={1500 + skillIndex * 200}
+                            />
+                          </span>
                         </div>
                         <div className="w-full bg-secondary rounded-full h-2">
                           <div 
                             className="bg-gradient-primary h-2 rounded-full transition-all duration-1000 ease-out"
-                            style={{ width: `${skill.level}%` }}
+                            style={{ 
+                              width: isVisible ? `${skill.level}%` : '0%',
+                              transitionDelay: `${skillIndex * 200}ms`
+                            }}
                           ></div>
                         </div>
                       </div>

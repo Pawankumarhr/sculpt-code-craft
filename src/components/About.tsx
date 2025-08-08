@@ -66,38 +66,19 @@ export const About = () => {
             </p>
           </div>
 
-          {/* Main Content */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
-            {/* Story */}
-            <div className="scroll-fade-in">
-              <h3 className="text-2xl font-bold mb-6 font-space-grotesk">My Story</h3>
-              <div className="space-y-4 text-muted-foreground">
-                <p>
-                  My journey into web development began 5 years ago when I discovered the perfect blend of creativity and logic that coding offers. What started as curiosity quickly became a passion for building digital solutions that make a real difference.
-                </p>
-                <p>
-                  I specialize in React, TypeScript, and modern frontend technologies, always staying up-to-date with the latest trends and best practices. My goal is to create applications that are not only functional but also beautiful and intuitive.
-                </p>
-                <p>
-                  When I'm not coding, you can find me exploring new design trends, contributing to open-source projects, or mentoring aspiring developers in my community.
-                </p>
-              </div>
-            </div>
-
-            {/* Highlights Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 scroll-fade-in">
-              {highlights.map((highlight, index) => (
-                <Card key={index} className="skill-card hover:transform hover:scale-105 transition-all duration-300">
-                  <CardContent className="p-6 text-center">
-                    <div className="w-16 h-16 bg-gradient-primary rounded-full flex items-center justify-center mx-auto mb-4">
-                      <highlight.icon className="w-8 h-8 text-white" />
-                    </div>
-                    <h4 className="font-bold mb-2 font-space-grotesk">{highlight.title}</h4>
-                    <p className="text-sm text-muted-foreground">{highlight.description}</p>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
+          {/* Highlights Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 scroll-fade-in">
+            {highlights.map((highlight, index) => (
+              <Card key={index} className="skill-card hover:transform hover:scale-105 transition-all duration-300">
+                <CardContent className="p-6 text-center">
+                  <div className="w-16 h-16 bg-gradient-primary rounded-full flex items-center justify-center mx-auto mb-4">
+                    <highlight.icon className="w-8 h-8 text-white" />
+                  </div>
+                  <h4 className="font-bold mb-2 font-space-grotesk">{highlight.title}</h4>
+                  <p className="text-sm text-muted-foreground">{highlight.description}</p>
+                </CardContent>
+              </Card>
+            ))}
           </div>
         </div>
       </div>

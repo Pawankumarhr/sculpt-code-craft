@@ -127,6 +127,28 @@
     @apply backdrop-blur-lg bg-glass-bg/10 border border-glass-border/20;
   }
 
+  /* Grid Floor for 3D Effect */
+  .grid-floor {
+    transform-style: preserve-3d;
+  }
+
+  .perspective-1000 {
+    perspective: 1000px;
+  }
+
+  .rotate-x-60 {
+    transform: rotateX(60deg);
+  }
+
+  .scale-y-200 {
+    transform: scaleY(2);
+  }
+
+  /* Gradient Radial */
+  .bg-gradient-radial {
+    background: radial-gradient(circle, var(--tw-gradient-stops));
+  }
+
   /* Glow Effect */
   .glow-effect {
     @apply shadow-[0_0_40px_hsl(var(--primary-glow)/0.3)];

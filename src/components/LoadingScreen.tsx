@@ -25,12 +25,72 @@ export const LoadingScreen = ({ onLoadingComplete }: LoadingScreenProps) => {
   }, [onLoadingComplete]);
 
   return (
-    <div className="fixed inset-0 z-[100] bg-background flex flex-col items-center justify-center">
-      {/* Background Animation */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-20 left-20 w-72 h-72 bg-primary/20 rounded-full blur-3xl animate-pulse-glow"></div>
-        <div className="absolute bottom-20 right-20 w-96 h-96 bg-secondary-glow/20 rounded-full blur-3xl animate-pulse-glow animation-delay-1000"></div>
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-primary opacity-10 rounded-full blur-3xl animate-pulse-glow animation-delay-500"></div>
+    <div className="fixed inset-0 z-[100] bg-black flex flex-col items-center justify-center overflow-hidden">
+      {/* Futuristic Digital Room Background */}
+      <div className="absolute inset-0">
+        {/* Base Room Structure */}
+        <div className="absolute inset-0 bg-gradient-to-b from-blue-950/80 via-blue-900/60 to-blue-950/80"></div>
+        
+        {/* Grid Floor */}
+        <div className="absolute bottom-0 left-0 w-full h-1/2 perspective-1000">
+          <div className="grid-floor transform-gpu rotate-x-60 scale-y-200">
+            {Array.from({ length: 20 }).map((_, row) => (
+              <div key={row} className="flex">
+                {Array.from({ length: 20 }).map((_, col) => (
+                  <div
+                    key={col}
+                    className="w-16 h-16 border border-cyan-400/30 relative"
+                    style={{
+                      animationDelay: `${(row + col) * 0.1}s`
+                    }}
+                  >
+                    <div className="absolute inset-0 bg-cyan-400/10 animate-pulse"></div>
+                  </div>
+                ))}
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Floating Data Streams */}
+        <div className="absolute inset-0">
+          {Array.from({ length: 15 }).map((_, i) => (
+            <div
+              key={i}
+              className="absolute h-px bg-gradient-to-r from-transparent via-cyan-400 to-transparent animate-pulse"
+              style={{
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+                width: `${100 + Math.random() * 200}px`,
+                transform: `rotate(${Math.random() * 360}deg)`,
+                animationDelay: `${Math.random() * 3}s`,
+                animationDuration: `${2 + Math.random() * 3}s`
+              }}
+            />
+          ))}
+        </div>
+
+        {/* Holographic Panels */}
+        <div className="absolute top-10 left-10 w-64 h-40 bg-cyan-400/10 border border-cyan-400/50 backdrop-blur-sm animate-pulse">
+          <div className="p-4 space-y-2">
+            {Array.from({ length: 6 }).map((_, i) => (
+              <div key={i} className="h-2 bg-cyan-400/30 rounded animate-pulse" style={{ animationDelay: `${i * 0.2}s` }}></div>
+            ))}
+          </div>
+        </div>
+
+        <div className="absolute top-10 right-10 w-64 h-40 bg-blue-400/10 border border-blue-400/50 backdrop-blur-sm animate-pulse animation-delay-1000">
+          <div className="p-4 space-y-2">
+            {Array.from({ length: 6 }).map((_, i) => (
+              <div key={i} className="h-2 bg-blue-400/30 rounded animate-pulse" style={{ animationDelay: `${i * 0.2 + 1}s` }}></div>
+            ))}
+          </div>
+        </div>
+
+        {/* Central Glow Effect */}
+        <div className="absolute inset-0 flex items-center justify-center">
+          <div className="w-96 h-96 bg-gradient-radial from-cyan-400/20 via-blue-500/10 to-transparent rounded-full animate-pulse"></div>
+        </div>
       </div>
 
       {/* Content */}
