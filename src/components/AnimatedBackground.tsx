@@ -1,6 +1,7 @@
 import { useRef } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
+import { Line } from '@react-three/drei';
 
 // Starburst Effect Component
 const StarburstParticles = () => {
@@ -100,18 +101,16 @@ const NetworkLines = () => {
               new THREE.Vector3(node.x, node.y, node.z),
               new THREE.Vector3(otherNode.x, otherNode.y, otherNode.z)
             ];
-            const geometry = new THREE.BufferGeometry().setFromPoints(points);
             
             return (
-              <line key={`${i}-${j}`}>
-                <bufferGeometry attach="geometry" {...geometry} />
-                <lineBasicMaterial 
-                  attach="material" 
-                  color="#00ffff" 
-                  transparent 
-                  opacity={0.3}
-                />
-              </line>
+              <Line 
+                key={`${i}-${j}`}
+                points={points}
+                color="#00ffff"
+                transparent
+                opacity={0.3}
+                lineWidth={1}
+              />
             );
           }
           return null;
