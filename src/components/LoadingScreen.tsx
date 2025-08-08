@@ -1,8 +1,61 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
+import { Canvas, useFrame } from '@react-three/fiber';
+import * as THREE from 'three';
+import { Line } from '@react-three/drei';
 
 interface LoadingScreenProps {
   onLoadingComplete: () => void;
 }
+
+// Spiderweb-like animated background used during loading
+const SpiderWeb = () => {
+  const groupRef = useRef<THREE.Group>(null);
+
+  useFrame((state) => {
+    if (!groupRef.current) return;
+    groupRef.current.rotation.z += 0.0006;
+  });
+
+  const nodes = Array.from({ length: 100 }, () => ({
+    x: (Math.random() - 0.5) * 30,
+    y: (Math.random() - 0.5) * 20,
+    z: (Math.random() - 0.5) * 10
+  }));
+
+  return (
+    <group ref={groupRef}>
+      {/* nodes */}
+      {nodes.map((n, i) => (
+        <mesh key={`n-${i}`} position={[n.x, n.y, n.z]}>
+          <sphereGeometry args={[0.05, 6, 6]} />
+          <meshBasicMaterial color="#88ccff" transparent opacity={0.9} />
+        </mesh>
+      ))}
+      {/* connective threads */}
+      {nodes.map((n, i) =>
+        nodes.slice(i + 1).map((m, j) => {
+          const dx = n.x - m.x;
+          const dy = n.y - m.y;
+          const dz = n.z - m.z;
+          const dist = Math.sqrt(dx * dx + dy * dy + dz * dz);
+          if (dist < 6) {
+            return (
+              <Line
+                key={`l-${i}-${j}`}
+                points={[new THREE.Vector3(n.x, n.y, n.z), new THREE.Vector3(m.x, m.y, m.z)]}
+                color="#88ccff"
+                transparent
+                opacity={Math.max(0.15, 0.6 - dist / 10)}
+                lineWidth={0.6}
+              />
+            );
+          }
+          return null;
+        })
+      )}
+    </group>
+  );
+};
 
 export const LoadingScreen = ({ onLoadingComplete }: LoadingScreenProps) => {
   const [progress, setProgress] = useState(0);
@@ -26,71 +79,13 @@ export const LoadingScreen = ({ onLoadingComplete }: LoadingScreenProps) => {
 
   return (
     <div className="fixed inset-0 z-[100] bg-black flex flex-col items-center justify-center overflow-hidden">
-      {/* Futuristic Digital Room Background */}
+      {/* Animated spiderweb background */}
       <div className="absolute inset-0">
-        {/* Base Room Structure */}
-        <div className="absolute inset-0 bg-gradient-to-b from-blue-950/80 via-blue-900/60 to-blue-950/80"></div>
-        
-        {/* Grid Floor */}
-        <div className="absolute bottom-0 left-0 w-full h-1/2 perspective-1000">
-          <div className="grid-floor transform-gpu rotate-x-60 scale-y-200">
-            {Array.from({ length: 20 }).map((_, row) => (
-              <div key={row} className="flex">
-                {Array.from({ length: 20 }).map((_, col) => (
-                  <div
-                    key={col}
-                    className="w-16 h-16 border border-cyan-400/30 relative"
-                    style={{
-                      animationDelay: `${(row + col) * 0.1}s`
-                    }}
-                  >
-                    <div className="absolute inset-0 bg-cyan-400/10 animate-pulse"></div>
-                  </div>
-                ))}
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Floating Data Streams */}
-        <div className="absolute inset-0">
-          {Array.from({ length: 15 }).map((_, i) => (
-            <div
-              key={i}
-              className="absolute h-px bg-gradient-to-r from-transparent via-cyan-400 to-transparent animate-pulse"
-              style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-                width: `${100 + Math.random() * 200}px`,
-                transform: `rotate(${Math.random() * 360}deg)`,
-                animationDelay: `${Math.random() * 3}s`,
-                animationDuration: `${2 + Math.random() * 3}s`
-              }}
-            />
-          ))}
-        </div>
-
-        {/* Holographic Panels */}
-        <div className="absolute top-10 left-10 w-64 h-40 bg-cyan-400/10 border border-cyan-400/50 backdrop-blur-sm animate-pulse">
-          <div className="p-4 space-y-2">
-            {Array.from({ length: 6 }).map((_, i) => (
-              <div key={i} className="h-2 bg-cyan-400/30 rounded animate-pulse" style={{ animationDelay: `${i * 0.2}s` }}></div>
-            ))}
-          </div>
-        </div>
-
-        <div className="absolute top-10 right-10 w-64 h-40 bg-blue-400/10 border border-blue-400/50 backdrop-blur-sm animate-pulse animation-delay-1000">
-          <div className="p-4 space-y-2">
-            {Array.from({ length: 6 }).map((_, i) => (
-              <div key={i} className="h-2 bg-blue-400/30 rounded animate-pulse" style={{ animationDelay: `${i * 0.2 + 1}s` }}></div>
-            ))}
-          </div>
-        </div>
-
-        {/* Central Glow Effect */}
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="w-96 h-96 bg-gradient-radial from-cyan-400/20 via-blue-500/10 to-transparent rounded-full animate-pulse"></div>
-        </div>
+        <Canvas camera={{ position: [0, 0, 22], fov: 70 }} className="w-full h-full opacity-80">
+          <ambientLight intensity={0.25} />
+          <pointLight position={[10, 10, 10]} intensity={0.7} color={0x88ccff} />
+          <SpiderWeb />
+        </Canvas>
       </div>
 
       {/* Content */}
@@ -99,7 +94,7 @@ export const LoadingScreen = ({ onLoadingComplete }: LoadingScreenProps) => {
           PAWAN KUMAR
         </h1>
         <h2 className="text-2xl lg:text-3xl text-muted-foreground animate-fade-in animation-delay-300">
-          Web Developer
+          Full Stack Developer
         </h2>
         
         {/* Loading Bar */}

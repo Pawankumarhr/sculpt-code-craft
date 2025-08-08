@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ThemeProvider } from '@/components/ui/theme-provider';
 import { LoadingScreen } from '@/components/LoadingScreen';
+import { AnimatedBackground } from '@/components/AnimatedBackground';
 import { Navigation } from '@/components/Navigation';
 import { Hero } from '@/components/Hero';
 import { About } from '@/components/About';
@@ -54,6 +55,9 @@ const Portfolio = () => {
   return (
     <ThemeProvider defaultTheme="dark">
       <div className="min-h-screen bg-background text-foreground">
+        <div className="fixed inset-0 -z-10 pointer-events-none">
+          <AnimatedBackground />
+        </div>
         {isLoading ? (
           <LoadingScreen onLoadingComplete={() => setIsLoading(false)} />
         ) : (

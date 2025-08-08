@@ -120,25 +120,59 @@ const NetworkLines = () => {
   );
 };
 
+// 3D falling stars effect
+const FallingStars = () => {
+  const groupRef = useRef<THREE.Group>(null);
+
+  useFrame((state) => {
+    if (!groupRef.current) return;
+    groupRef.current.children.forEach((child) => {
+      const speed = child.userData.speed ?? 0.02;
+      child.position.y -= speed;
+      child.position.x += Math.sin(state.clock.getElapsedTime() + (child.userData.phase || 0)) * 0.002;
+      if (child.position.y < -12) {
+        child.position.y = 12;
+        child.position.x = (Math.random() - 0.5) * 20;
+        child.position.z = (Math.random() - 0.5) * 10;
+      }
+    });
+  });
+
+  return (
+    <group ref={groupRef}>
+      {Array.from({ length: 120 }).map((_, i) => (
+        <mesh
+          key={i}
+          position={[(Math.random() - 0.5) * 20, Math.random() * 24 - 12, (Math.random() - 0.5) * 10]}
+          userData={{ speed: 0.02 + Math.random() * 0.04, phase: Math.random() * Math.PI * 2 }}
+        >
+          <sphereGeometry args={[0.05, 6, 6]} />
+          <meshBasicMaterial color="#00ffff" transparent opacity={0.8} />
+        </mesh>
+      ))}
+    </group>
+  );
+};
+
 export const AnimatedBackground = () => {
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none">
       <Canvas
         camera={{ position: [0, 0, 20], fov: 75 }}
-        className="w-full h-full opacity-60"
+        className="w-full h-full opacity-70"
       >
         <ambientLight intensity={0.3} />
         <pointLight position={[10, 10, 10]} intensity={0.8} color={0x00ffff} />
         <pointLight position={[-10, -10, 5]} intensity={0.5} color={0x0088ff} />
         
-        {/* Starburst effect in background */}
-        <group position={[0, 0, -10]}>
-          <StarburstParticles />
+        {/* Cyan network in background */}
+        <group position={[0, 0, -2]}>
+          <NetworkLines />
         </group>
         
-        {/* Network lines in foreground */}
+        {/* 3D falling stars overlay */}
         <group position={[0, 0, 0]}>
-          <NetworkLines />
+          <FallingStars />
         </group>
       </Canvas>
       

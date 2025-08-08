@@ -1,46 +1,8 @@
 import { useEffect, useRef } from 'react';
-import { Canvas } from '@react-three/fiber';
-import { OrbitControls } from '@react-three/drei';
 import { ChevronDown, Download, Github, Linkedin, Mail } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { LetterByLetterText } from './LetterByLetterText';
 import { AnimatedBackground } from './AnimatedBackground';
-import * as THREE from 'three';
-
-const AnimatedSphere = () => {
-  const meshRef = useRef<THREE.Mesh>(null);
-
-  useEffect(() => {
-    let animationId: number;
-    
-    const animate = () => {
-      if (meshRef.current) {
-        meshRef.current.rotation.x += 0.01;
-        meshRef.current.rotation.y += 0.01;
-      }
-      animationId = requestAnimationFrame(animate);
-    };
-    
-    animate();
-    
-    return () => {
-      if (animationId) {
-        cancelAnimationFrame(animationId);
-      }
-    };
-  }, []);
-
-  return (
-    <mesh ref={meshRef}>
-      <sphereGeometry args={[1, 64, 64]} />
-      <meshStandardMaterial
-        color="#a855f7"
-        roughness={0.4}
-        metalness={0.1}
-      />
-    </mesh>
-  );
-};
 
 export const Hero = () => {
   const heroRef = useRef<HTMLElement>(null);
@@ -97,11 +59,11 @@ export const Hero = () => {
                 <LetterByLetterText 
                   text="PAWAN KUMAR" 
                   startDelay={800}
-                  delay={150}
+                  delay={120}
                 />
               </h1>
               <h2 className="text-3xl lg:text-4xl font-bold text-muted-foreground mb-6 animate-slide-up">
-                Full Stack Developer & Designer
+                Full Stack Developer
               </h2>
             </div>
 
@@ -151,26 +113,6 @@ export const Hero = () => {
             </div>
           </div>
 
-          {/* 3D Animation */}
-          <div className="relative h-96 lg:h-[500px] animate-scale-in">
-            <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-secondary-glow/20 rounded-full blur-3xl"></div>
-            <div className="w-full h-full">
-              <Canvas
-                camera={{ position: [0, 0, 5], fov: 50 }}
-                className="w-full h-full"
-                fallback={
-                  <div className="w-full h-full flex items-center justify-center">
-                    <div className="w-32 h-32 bg-gradient-primary rounded-full animate-pulse"></div>
-                  </div>
-                }
-              >
-                <ambientLight intensity={0.5} />
-                <directionalLight position={[10, 10, 5]} intensity={1} />
-                <AnimatedSphere />
-                <OrbitControls enableZoom={false} autoRotate autoRotateSpeed={0.5} />
-              </Canvas>
-            </div>
-          </div>
         </div>
       </div>
 
